@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Menghitung Nilai Paparan Vibrasi - Sesuai dengan PERMENKES No. 70 Tahun 2016</title>
+  <title>Kalkulasi Paparan Vibrasi</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -68,40 +68,26 @@
       font-weight: bold;
       background-color: #eef;
     }
-
-    button {
-      padding: 10px 20px;
-      background-color: #1f4e79;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #163b5c;
-    }
   </style>
 </head>
 <body>
 
   <h2>
-    Menghitung Nilai Paparan Vibrasi
-    <span>Sesuai dengan PERMENKES No. 70 Tahun 2016</span>
+    Kalkulasi Paparan Vibrasi
+    <span>Sesuai Permenkes No. 70 Tahun 2016</span>
   </h2>
 
   <div class="section">
     <h3>INPUT</h3>
     <table>
       <tr><th>Parameter</th><th>Nilai</th><th>Satuan</th><th>Deskripsi</th></tr>
-      <tr><td>Akselerasi RMS Aksis X</td><td><input type="number" id="ax" step="0.01"></td><td>m/s²</td><td></td></tr>
-      <tr><td>Akselerasi RMS Aksis Y</td><td><input type="number" id="ay" step="0.01"></td><td>m/s²</td><td></td></tr>
-      <tr><td>Akselerasi RMS Aksis Z</td><td><input type="number" id="az" step="0.01"></td><td>m/s²</td><td></td></tr>
-      <tr><td>Durasi Pajanan</td><td><input type="number" id="durasi" step="1"></td><td>detik</td><td>1 Shift (8 Jam Kerja)</td></tr>
-      <tr><td>Ambang Batas RMS</td><td><input type="number" id="rmsAmbang" step="0.01"></td><td>m/s²</td><td>KEPMENAKER 51/MEN/1999</td></tr>
-      <tr><td>Ambang Batas VDV</td><td><input type="number" id="vdvAmbang" step="0.01"></td><td>m/s<sup>1.75</sup></td><td>KEPMENAKER 51/MEN/1999</td></tr>
+      <tr><td>Akselerasi RMS Aksis X</td><td><input type="number" id="ax" step="0.01" oninput="hitung()"></td><td>m/s²</td><td></td></tr>
+      <tr><td>Akselerasi RMS Aksis Y</td><td><input type="number" id="ay" step="0.01" oninput="hitung()"></td><td>m/s²</td><td></td></tr>
+      <tr><td>Akselerasi RMS Aksis Z</td><td><input type="number" id="az" step="0.01" oninput="hitung()"></td><td>m/s²</td><td></td></tr>
+      <tr><td>Durasi Pajanan</td><td><input type="number" id="durasi" step="1" oninput="hitung()"></td><td>detik</td><td>1 Shift (8 Jam Kerja)</td></tr>
+      <tr><td>Ambang Batas RMS</td><td><input type="number" id="rmsAmbang" step="0.01" oninput="hitung()"></td><td>m/s²</td><td>KEPMENAKER 51/MEN/1999</td></tr>
+      <tr><td>Ambang Batas VDV</td><td><input type="number" id="vdvAmbang" step="0.01" oninput="hitung()"></td><td>m/s<sup>1.75</sup></td><td>KEPMENAKER 51/MEN/1999</td></tr>
     </table>
-    <button onclick="hitung()">Hitung Output</button>
   </div>
 
   <div class="section">
@@ -114,17 +100,16 @@
     </table>
   </div>
 
-<div class="section">
-  <h3>Waktu Istirahat Bergantian</h3>
-  <table>
-    <tr><th>Nilai</th><th>Skema</th><th>Deskripsi</th></tr>
-    <tr><td id="skemaA" class="output"></td><td>Skema A</td><td>&lt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-    <tr><td id="skemaB" class="output"></td><td>Skema B</td><td>&gt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-    <tr><td id="skemaC" class="output"></td><td>Skema C</td><td>&gt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-    <tr><td id="skemaD" class="output"></td><td>Skema D</td><td>=15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-  </table>
-</div>
-
+  <div class="section">
+    <h3>Waktu Istirahat Bergantian</h3>
+    <table>
+      <tr><th>Nilai</th><th>Skema</th><th>Deskripsi</th></tr>
+      <tr><td id="skemaA" class="output"></td><td>Skema A</td><td>&lt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
+      <tr><td id="skemaB" class="output"></td><td>Skema B</td><td>&gt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
+      <tr><td id="skemaC" class="output"></td><td>Skema C</td><td>&gt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
+      <tr><td id="skemaD" class="output"></td><td>Skema D</td><td>=15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
+    </table>
+  </div>
 
   <script>
     function hitung() {
