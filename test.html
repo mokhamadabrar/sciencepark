@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Menghitung Nilai Paparan Vibrasi - Sesuai dengan PERMENKES No. 70 Tahun 2016</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f7fa;
+      margin: 40px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 5px;
+      color: #2c3e50;
+    }
+
+    h2 span {
+      font-size: 18px;
+      font-weight: normal;
+      display: block;
+      margin-top: 5px;
+      color: #555;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    h3 {
+      color: #1f4e79;
+      border-bottom: 2px solid #dbe9f4;
+      padding-bottom: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: #fff;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #dbe9f4;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f6fc;
+    }
+
+    .literature {
+      background-color: #eef5fb;
+      padding: 15px;
+      border: 1px solid #cbd6e2;
+      font-size: 14px;
+    }
+
+    .formula {
+      font-family: 'Courier New', monospace;
+      background-color: #fff;
+      padding: 10px;
+      margin: 10px 0;
+      border-left: 4px solid #3498db;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>
+    Menghitung Nilai Paparan Vibrasi
+    <span>Sesuai dengan PERMENKES No. 70 Tahun 2016</span>
+  </h2>
+
+  <div class="section">
+    <h3>INPUT</h3>
+    <table>
+      <tr><th>Parameter</th><th>Nilai</th><th>Satuan</th><th>Deskripsi</th></tr>
+      <tr><td>Akselerasi RMS Aksis X</td><td>0.60</td><td>m/s²</td><td></td></tr>
+      <tr><td>Akselerasi RMS Aksis Y</td><td>0.50</td><td>m/s²</td><td></td></tr>
+      <tr><td>Akselerasi RMS Aksis Z</td><td>0.90</td><td>m/s²</td><td></td></tr>
+      <tr><td>Durasi Pajanan</td><td>28800</td><td>detik</td><td>1 Shift (8 Jam Kerja)</td></tr>
+      <tr><td>Ambang Batas RMS</td><td>0.80</td><td>m/s²</td><td>KEPMENAKER 51/MEN/1999</td></tr>
+      <tr><td>Ambang Batas VDV</td><td>15.00</td><td>m/s<sup>1.75</sup></td><td>KEPMENAKER 51/MEN/1999</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>OUTPUT</h3>
+    <table>
+      <tr><th>Parameter</th><th>Nilai</th><th>Satuan</th><th>Deskripsi</th></tr>
+      <tr><td>RMS Resultan</td><td>1.42169</td><td>m/s²</td><td>> 0,8 (Ambang Batas RMS)</td></tr>
+      <tr><td>VDV (Vibration Dose Value)</td><td>18.44889174</td><td>m/s<sup>1.75</sup></td><td></td></tr>
+      <tr><td>Durasi Maksimum (RMS)</td><td>3.49601988</td><td>jam</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>Waktu Istirahat Bergantian</h3>
+    <table>
+      <tr><th>Nilai</th><th>Skema</th><th>Deskripsi</th></tr>
+      <tr><td>14.67186358</td><td>Skema A</td><td><15 m/s<sup>1.75</sup> (NAB VDV)</td></tr>
+      <tr><td>18.44889174</td><td>Skema B</td><td>>15 m/s<sup>1.75</sup></td></tr>
+      <tr><td>15.51360693</td><td>Skema C</td><td></td></tr>
+      <tr><td>15.00426745</td><td>Skema D</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>LITERATURE</h3>
+    <div class="literature">
+      <strong>Rumus RMS (ISO 2631-1):</strong>
+      <div class="formula">
+        a<sub>w</sub> = √[(1/T) × Σ(a<sub>wi</sub>² × T<sub>i</sub>)]<br>
+        atau jika hanya satu durasi pajanan:<br>
+        a<sub>w</sub> = √[(1.4a<sub>x</sub>)² + (1.4a<sub>y</sub>)² + (a<sub>z</sub>)²]
+      </div>
+
+      <strong>Rumus VDV (ISO 2631-1):</strong>
+      <div class="formula">
+        VDV = √[Σ(a<sub>wi</sub>⁴ × t<sub>i</sub>)]<sup>1/4</sup><br>
+        atau secara umum:<br>
+        VDV = a<sub>w</sub> × √T × (T / 3600)<sup>1/4</sup>
+      </div>
+
+      <strong>Durasi Maksimum (ISO 2631-1):</strong>
+      <div class="formula">
+        T = (VDV / a<sub>w</sub>)⁴
+      </div>
+
+      <strong>Waktu Istirahat Bergantian (ISO 2631-1):</strong>
+      <div class="formula">
+        T = (VDV / a<sub>w</sub>)⁴
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
