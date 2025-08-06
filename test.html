@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Kalkulasi Paparan Vibrasi - Permenkes No. 70 Tahun 2016</title>
+  <title>Kalkulasi Paparan Vibrasi</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -10,13 +10,11 @@
       margin: 40px;
       color: #333;
     }
-
     h2 {
       text-align: center;
       margin-bottom: 5px;
       color: #2c3e50;
     }
-
     h2 span {
       font-size: 18px;
       font-weight: normal;
@@ -24,96 +22,288 @@
       margin-top: 5px;
       color: #555;
     }
-
     .section {
       margin-bottom: 40px;
     }
-
     h3 {
       color: #1f4e79;
       border-bottom: 2px solid #dbe9f4;
       padding-bottom: 5px;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
       background-color: #fff;
     }
-
     th, td {
       border: 1px solid #ccc;
       padding: 10px;
       text-align: center;
       vertical-align: middle;
+      position: relative;
     }
-
     th {
       background-color: #dbe9f4;
       font-weight: bold;
     }
-
     tr:nth-child(even) {
       background-color: #f2f6fc;
     }
-
     input[type="number"] {
       width: 100%;
       padding: 5px;
       box-sizing: border-box;
       text-align: center;
+      font-size: 15px;
     }
-
     .output {
       font-weight: bold;
       background-color: #eef;
+    }
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .literature {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    /* Tooltip styling */
+    .tooltip {
+      cursor: pointer;
+      border-bottom: 1px dotted #555;
+      text-decoration: none;
+      position: relative;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 260px;
+      background-color: #1f4e79;
+      color: #fff;
+      text-align: left;
+      border-radius: 7px;
+      padding: 10px 15px;
+      position: absolute;
+      z-index: 100;
+      bottom: 120%;
+      left: 50%;
+      margin-left: -130px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 13px;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    .status {
+      padding: 2px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    .aman {
+      background: #d3f9d8;
+      color: #137333;
+      border: 1px solid #a4e9ae;
+    }
+    .tidakaman {
+      background: #ffeaea;
+      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+    }
+    .alert {
+      color: #d32f2f;
+      font-size: 14px;
+      background: #ffeaea;
+      border: 1px solid #ffcdd2;
+      padding: 6px 15px;
+      border-radius: 6px;
+      display: none;
+      margin: 12px 0;
+      text-align: left;
     }
   </style>
 </head>
 <body>
 
   <h2>
-    Kalkulasi Paparan Vibrasi
+    KALKULASI PAPARAN VIBRASI
     <span>Sesuai Permenkes No. 70 Tahun 2016</span>
   </h2>
 
   <div class="section">
     <h3>INPUT</h3>
+    <div id="alert" class="alert"></div>
     <table>
-      <tr><th>Parameter</th><th>Nilai</th><th>Satuan</th><th>Deskripsi</th></tr>
-      <tr><td>Akselerasi RMS Aksis X</td><td><input type="number" id="ax" step="0.01" oninput="hitung()"></td><td>m/s²</td><td></td></tr>
-      <tr><td>Akselerasi RMS Aksis Y</td><td><input type="number" id="ay" step="0.01" oninput="hitung()"></td><td>m/s²</td><td></td></tr>
-      <tr><td>Akselerasi RMS Aksis Z</td><td><input type="number" id="az" step="0.01" oninput="hitung()"></td><td>m/s²</td><td></td></tr>
-      <tr><td>Durasi Pajanan</td><td><input type="number" id="durasi" step="1" oninput="hitung()"></td><td>detik</td><td>1 Shift (8 Jam Kerja)</td></tr>
-      <tr><td>Ambang Batas RMS</td><td><input type="number" id="rmsAmbang" step="0.01" oninput="hitung()"></td><td>m/s²</td><td>KEPMENAKER 51/MEN/1999</td></tr>
-      <tr><td>Ambang Batas VDV</td><td><input type="number" id="vdvAmbang" step="0.01" oninput="hitung()"></td><td>m/s<sup>1.75</sup></td><td>KEPMENAKER 51/MEN/1999</td></tr>
+      <tr>
+        <th>Parameter</th>
+        <th>Nilai</th>
+        <th>Satuan</th>
+        <th>Deskripsi</th>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Akselerasi RMS Aksis X
+            <span class="tooltiptext">Rata-rata percepatan getaran arah X dalam m/s².<br>Diukur sesuai ISO 2631.</span>
+          </span>
+        </td>
+        <td><input type="number" id="ax" step="0.01" min="0" placeholder="0.00" oninput="hitung()"></td>
+        <td>m/s²</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Akselerasi RMS Aksis Y
+            <span class="tooltiptext">Rata-rata percepatan getaran arah Y dalam m/s².<br>Diukur sesuai ISO 2631.</span>
+          </span>
+        </td>
+        <td><input type="number" id="ay" step="0.01" min="0" placeholder="0.00" oninput="hitung()"></td>
+        <td>m/s²</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Akselerasi RMS Aksis Z
+            <span class="tooltiptext">Rata-rata percepatan getaran arah Z dalam m/s².<br>Diukur sesuai ISO 2631.</span>
+          </span>
+        </td>
+        <td><input type="number" id="az" step="0.01" min="0" placeholder="0.00" oninput="hitung()"></td>
+        <td>m/s²</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Durasi Pajanan
+            <span class="tooltiptext">Lama paparan getaran (dalam detik).<br>1 shift kerja (8 jam) = 28,800 detik.</span>
+          </span>
+        </td>
+        <td><input type="number" id="durasi" step="1" min="0" placeholder="0" oninput="hitung()"></td>
+        <td>detik</td>
+        <td>1 Shift (8 Jam Kerja)</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Ambang Batas RMS
+            <span class="tooltiptext">Nilai Ambang Batas RMS menurut Permenkes No. 70 Tahun 2016. Biasanya 0.5 m/s² untuk paparan 8 jam.</span>
+          </span>
+        </td>
+        <td><input type="number" id="rmsAmbang" step="0.01" min="0" placeholder="0.50" oninput="hitung()"></td>
+        <td>m/s²</td>
+        <td>Permenkes No. 70 Tahun 2016</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Ambang Batas VDV
+            <span class="tooltiptext">Nilai Ambang Batas VDV menurut Permenkes No. 70 Tahun 2016. Biasanya 9.1 m/s<sup>1.75</sup> untuk 8 jam.</span>
+          </span>
+        </td>
+        <td><input type="number" id="vdvAmbang" step="0.01" min="0" placeholder="9.10" oninput="hitung()"></td>
+        <td>m/s<sup>1.75</sup></td>
+        <td>Permenkes No. 70 Tahun 2016</td>
+      </tr>
     </table>
   </div>
 
   <div class="section">
     <h3>OUTPUT</h3>
     <table>
-      <tr><th>Parameter</th><th>Nilai</th><th>Satuan</th><th>Deskripsi</th></tr>
-      <tr><td>RMS Resultan</td><td id="rmsResultan" class="output"></td><td>m/s²</td><td></td></tr>
-      <tr><td>VDV (Vibration Dose Value)</td><td id="vdv" class="output"></td><td>m/s<sup>1.75</sup></td><td></td></tr>
-      <tr><td>Durasi Maksimum (RMS)</td><td id="durasiMax" class="output"></td><td>jam</td><td></td></tr>
+      <tr>
+        <th>Parameter</th>
+        <th>Nilai</th>
+        <th>Satuan</th>
+        <th>Deskripsi</th>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">RMS Resultan
+            <span class="tooltiptext">Hasil gabungan RMS (resultan vektor 3 sumbu): √[(1.4X)² + (1.4Y)² + (Z)²]</span>
+          </span>
+        </td>
+        <td id="rmsResultan" class="output"></td>
+        <td>m/s²</td>
+        <td>
+          <span id="rmsStatus"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">VDV (Vibration Dose Value)
+            <span class="tooltiptext">Indeks dosis getaran: VDV = RMS_resultan × (durasi)<sup>0.25</sup>.<br>Relevan untuk evaluasi paparan berulang.</span>
+          </span>
+        </td>
+        <td id="vdv" class="output"></td>
+        <td>m/s<sup>1.75</sup></td>
+        <td>
+          <span id="vdvStatus"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="tooltip">Durasi Maksimum (RMS)
+            <span class="tooltiptext">Perkiraan waktu maksimal paparan RMS hingga batas NAB.</span>
+          </span>
+        </td>
+        <td id="durasiMax" class="output"></td>
+        <td>jam</td>
+        <td></td>
+      </tr>
     </table>
   </div>
 
   <div class="section">
     <h3>Waktu Istirahat Bergantian</h3>
     <table>
-      <tr><th>Nilai</th><th>Skema</th><th>Deskripsi</th></tr>
-      <tr><td id="skemaA" class="output"></td><td>Skema A</td><td>&lt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-      <tr><td id="skemaB" class="output"></td><td>Skema B</td><td>&gt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-      <tr><td id="skemaC" class="output"></td><td>Skema C</td><td>&gt;15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
-      <tr><td id="skemaD" class="output"></td><td>Skema D</td><td>=15 m/s<sup>1.75</sup> (NAB VDV) Permenkes No. 70 Tahun 2016</td></tr>
+      <tr>
+        <th>Nilai</th>
+        <th>Skema</th>
+        <th>Deskripsi</th>
+      </tr>
+      <tr>
+        <td id="skemaA" class="output"></td>
+        <td>Skema A</td>
+        <td>&lt;15 m/s<sup>1.75</sup> (NAB VDV)</td>
+      </tr>
+      <tr>
+        <td id="skemaB" class="output"></td>
+        <td>Skema B</td>
+        <td>&gt;15 m/s<sup>1.75</sup> (NAB VDV)</td>
+      </tr>
+      <tr>
+        <td id="skemaC" class="output"></td>
+        <td>Skema C</td>
+        <td>&gt;15 m/s<sup>1.75</sup> (NAB VDV)</td>
+      </tr>
+      <tr>
+        <td id="skemaD" class="output"></td>
+        <td>Skema D</td>
+        <td>=15 m/s<sup>1.75</sup> (NAB VDV)</td>
+      </tr>
     </table>
+  </div>
+
+  <div class="section">
+    <h3>Literatur</h3>
+    <div class="literature">
+      <ul>
+        <li><strong>Permenkes No. 70 Tahun 2016</strong> – Tentang Standar dan Batasan Paparan Getaran di Tempat Kerja.</li>
+        <li><strong>KEPMENAKER No. 51/MEN/1999</strong> – Tentang Nilai Ambang Batas Faktor Fisika di Tempat Kerja (old requirement).</li>
+        <li><strong>ISO 2631-1:1997</strong> – Mechanical vibration and shock — Evaluation of human exposure to whole-body vibration.</li>
+        <li><strong>Griffin, M.J. (1990)</strong> – Handbook of Human Vibration. Academic Press.</li>
+        <li><strong>Bovenzi, M. (2005)</strong> – Health effects of mechanical vibration. Giornale Italiano di Medicina del Lavoro ed Ergonomia.</li>
+      </ul>
+    </div>
   </div>
 
   <script>
     function hitung() {
+      // Ambil input
       const ax = parseFloat(document.getElementById("ax").value) || 0;
       const ay = parseFloat(document.getElementById("ay").value) || 0;
       const az = parseFloat(document.getElementById("az").value) || 0;
@@ -121,23 +311,66 @@
       const rmsAmbang = parseFloat(document.getElementById("rmsAmbang").value) || 0;
       const vdvAmbang = parseFloat(document.getElementById("vdvAmbang").value) || 0;
 
+      // Validasi negatif
+      let alertMsg = "";
+      if (ax < 0 || ay < 0 || az < 0 || durasi < 0 || rmsAmbang < 0 || vdvAmbang < 0) {
+        alertMsg = "Nilai input tidak boleh negatif. Silakan cek kembali data yang Anda masukkan.";
+      }
+      // Tampilkan alert jika ada
+      document.getElementById("alert").style.display = alertMsg ? "block" : "none";
+      document.getElementById("alert").innerText = alertMsg;
+
+      // Jika ada nilai negatif, kosongkan output
+      if (alertMsg) {
+        [
+          "rmsResultan", "vdv", "durasiMax", "skemaA", "skemaB", "skemaC", "skemaD",
+          "rmsStatus", "vdvStatus"
+        ].forEach(id => document.getElementById(id).innerText = "");
+        return;
+      }
+
+      // Kalkulasi utama
       const rmsResultan = Math.sqrt(Math.pow(1.4 * ax, 2) + Math.pow(1.4 * ay, 2) + Math.pow(az, 2));
       const vdv = rmsResultan * Math.pow(durasi, 0.25);
-      const durasiMax = Math.pow((rmsAmbang / rmsResultan), 4) / 3600;
+      const durasiMax = (rmsResultan === 0) ? 0 : Math.pow((rmsAmbang / rmsResultan), 4) / 3600;
 
+      // Skema waktu istirahat (dummy value, modifikasi sesuai aturan teknis jika perlu)
       const skemaA = rmsResultan * Math.pow(11520, 0.25);
       const skemaB = rmsResultan * Math.pow(28800, 0.25);
       const skemaC = rmsResultan * Math.pow(14400, 0.25);
       const skemaD = rmsResultan * Math.pow(12600, 0.25);
 
-      document.getElementById("rmsResultan").innerText = rmsResultan.toFixed(5);
-      document.getElementById("vdv").innerText = vdv.toFixed(8);
-      document.getElementById("durasiMax").innerText = durasiMax.toFixed(8);
+      // Output 4 desimal
+      document.getElementById("rmsResultan").innerText = rmsResultan.toFixed(4);
+      document.getElementById("vdv").innerText = vdv.toFixed(4);
+      document.getElementById("durasiMax").innerText = durasiMax.toFixed(4);
 
-      document.getElementById("skemaA").innerText = skemaA.toFixed(8);
-      document.getElementById("skemaB").innerText = skemaB.toFixed(8);
-      document.getElementById("skemaC").innerText = skemaC.toFixed(8);
-      document.getElementById("skemaD").innerText = skemaD.toFixed(8);
+      document.getElementById("skemaA").innerText = skemaA.toFixed(4);
+      document.getElementById("skemaB").innerText = skemaB.toFixed(4);
+      document.getElementById("skemaC").innerText = skemaC.toFixed(4);
+      document.getElementById("skemaD").innerText = skemaD.toFixed(4);
+
+      // Status Aman/Tidak Aman RMS
+      let rmsStatusText = "";
+      if (rmsAmbang && rmsResultan > 0) {
+        if (rmsResultan <= rmsAmbang) {
+          rmsStatusText = '<span class="status aman">Aman</span>';
+        } else {
+          rmsStatusText = '<span class="status tidakaman">Tidak Aman</span>';
+        }
+      }
+      document.getElementById("rmsStatus").innerHTML = rmsStatusText;
+
+      // Status Aman/Tidak Aman VDV
+      let vdvStatusText = "";
+      if (vdvAmbang && vdv > 0) {
+        if (vdv <= vdvAmbang) {
+          vdvStatusText = '<span class="status aman">Aman</span>';
+        } else {
+          vdvStatusText = '<span class="status tidakaman">Tidak Aman</span>';
+        }
+      }
+      document.getElementById("vdvStatus").innerHTML = vdvStatusText;
     }
   </script>
 
